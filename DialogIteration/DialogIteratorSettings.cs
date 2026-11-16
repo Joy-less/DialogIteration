@@ -217,4 +217,36 @@ public sealed class DialogIteratorSettings {
             || ExclamationMarkRunes.Contains(Rune)
             || SeparatorRunes.Contains(Rune);
     }
+
+    /// <summary>
+    /// Ensures all the properties are valid.
+    /// </summary>
+    internal void ValidateProperties() {
+        ArgumentOutOfRangeException.ThrowIfNegative(BaseDelay);
+        ArgumentOutOfRangeException.ThrowIfNegative(NormalDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(PeriodDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(QuestionMarkDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(ExclamationMarkDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(SeparatorDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(NewlineDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(SymmetricalDelimiterDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(LeftDelimiterDelayMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(RightDelimiterDelayMultiplier);
+
+        ArgumentOutOfRangeException.ThrowIfNegative(SyllableLength);
+
+        ArgumentOutOfRangeException.ThrowIfNegative(BasePitch);
+        ArgumentOutOfRangeException.ThrowIfNegative(NormalPitchMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(QuestionPitchMultiplier);
+        ArgumentOutOfRangeException.ThrowIfNegative(ExclamationPitchMultiplier);
+
+        ArgumentNullException.ThrowIfNull(PeriodRunes);
+        ArgumentNullException.ThrowIfNull(QuestionMarkRunes);
+        ArgumentNullException.ThrowIfNull(ExclamationMarkRunes);
+        ArgumentNullException.ThrowIfNull(SeparatorRunes);
+        ArgumentNullException.ThrowIfNull(NewlineRunes);
+        ArgumentNullException.ThrowIfNull(SymmetricalDelimiterRunes);
+        ArgumentNullException.ThrowIfNull(LeftDelimiterRunes);
+        ArgumentNullException.ThrowIfNull(RightDelimiterRunes);
+    }
 }

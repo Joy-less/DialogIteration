@@ -48,6 +48,8 @@ public sealed class DialogIterator {
         ArgumentNullException.ThrowIfNull(Text);
         ArgumentNullException.ThrowIfNull(NextFrameAsync);
 
+        Settings.ValidateProperties();
+
         // Convert text to runes
         List<(Rune Rune, int CharIndex)> Runes = GetRunesAndCharIndexesFromString(Text);
 
