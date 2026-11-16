@@ -38,9 +38,9 @@ public sealed class DialogIterator {
     /// A method that is called repeatedly to check whether the iteration should be skipped.<br/>
     /// If this method returns true, the iteration will skip to after the last rune, and <paramref name="OnRune"/> will be called for the last rune.
     /// </param>
-    public async Task IterateAsync(
+    public async ValueTask IterateAsync(
         string Text,
-        Func<Task<double>> NextFrameAsync,
+        Func<ValueTask<double>> NextFrameAsync,
         OnRuneDelegate? OnRune = null,
         OnSyllableDelegate? OnSyllable = null,
         ShouldSkipDelegate? ShouldSkip = null
@@ -207,7 +207,7 @@ public sealed class DialogIterator {
     }
 
     /// <summary>
-    /// A delegate that is called by <see cref="IterateAsync(string, Func{Task{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
+    /// A delegate that is called by <see cref="IterateAsync(string, Func{ValueTask{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
     /// when each rune is iterated.
     /// </summary>
     /// <param name="RuneIndex">
@@ -226,7 +226,7 @@ public sealed class DialogIterator {
     /// </param>
     public delegate void OnRuneDelegate(int RuneIndex, int CharIndex, Rune Rune);
     /// <summary>
-    /// A delegate that is called by <see cref="IterateAsync(string, Func{Task{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
+    /// A delegate that is called by <see cref="IterateAsync(string, Func{ValueTask{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
     /// when the first rune in each syllable is iterated.
     /// </summary>
     /// <param name="FirstRuneIndex">
@@ -242,7 +242,7 @@ public sealed class DialogIterator {
     /// </param>
     public delegate void OnSyllableDelegate(int FirstRuneIndex, int FirstCharIndex, float SyllablePitch);
     /// <summary>
-    /// A delegate that is called by <see cref="IterateAsync(string, Func{Task{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
+    /// A delegate that is called by <see cref="IterateAsync(string, Func{ValueTask{double}}, OnRuneDelegate?, OnSyllableDelegate?, ShouldSkipDelegate?)"/>
     /// repeatedly to check whether the iteration should be skipped.
     /// </summary>
     /// <returns>

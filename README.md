@@ -19,7 +19,7 @@ public partial class MyExampleNode : Node {
     public async GDTask PromptDialogAsync(Label DialogLabel, string Text) {
         await DialogIterator.IterateAsync(
             Text: Text,
-            NextFrameAsync: () => GDTask.NextFrame(GDTaskGlobalCancellation.GetToken()).ContinueWith(GetProcessDeltaTime).AsTask(),
+            NextFrameAsync: () => GDTask.NextFrame(GDTaskGlobalCancellation.GetToken()).ContinueWith(GetProcessDeltaTime).AsValueTask(),
             OnRune: (int RuneIndex, int CharIndex, Rune Rune) => {
                 DialogLabel.VisibleCharacters = RuneIndex + 1;
             },
