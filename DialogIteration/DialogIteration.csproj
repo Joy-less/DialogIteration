@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <VersionPrefix>1.0</VersionPrefix>
+        <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>DialogIteration</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0'))">
+        <Features>runtime-async=on</Features>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsAotCompatible>true</IsAotCompatible>
+        <IsTrimmable>true</IsTrimmable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Title>DialogIteration</Title>
+        <Description>A helper library for iterating dialog character-by-character.</Description>
+        <PackageProjectUrl>https://github.com/Joy-less/DialogIteration</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/Joy-less/DialogIteration</RepositoryUrl>
+        <PackageTags>dialog; iteration; DialogIterator</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../README.md">
+            <Pack>True</Pack>
+            <PackagePath>/</PackagePath>
+        </None>
+    </ItemGroup>
+</Project>
