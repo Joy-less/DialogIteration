@@ -110,11 +110,23 @@ public sealed class DialogIterator {
                 Rune CurrentSecondRune = ParsedRunes[Index + 1];
 
                 bool IsCombinedPair = false;
-                foreach ((Rune FirstInPair, Rune SecondInPair) in Settings.CombinedRunePairs) {
-                    if (CurrentFirstRune == FirstInPair && CurrentSecondRune == SecondInPair) {
-                        IsCombinedPair = true;
-                        break;
-                    }
+                if (Settings.NewlineRunes.Contains(CurrentFirstRune) && Settings.NewlineRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
+                }
+                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && Settings.ExclamationRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
+                }
+                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && Settings.QuestionRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
+                }
+                else if (Settings.PeriodRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
+                }
+                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
+                }
+                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                    IsCombinedPair = true;
                 }
 
                 if (IsCombinedPair) {
