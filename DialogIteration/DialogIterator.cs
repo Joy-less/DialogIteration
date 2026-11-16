@@ -75,12 +75,12 @@ public sealed class DialogIterator {
                     FoundPunctuation = true;
                     break;
                 }
-                else if (Settings.QuestionRunes.Contains(Runes[SubIndex].Rune)) {
+                else if (Settings.QuestionMarkRunes.Contains(Runes[SubIndex].Rune)) {
                     WordPitch *= Settings.QuestionPitchMultiplier;
                     FoundPunctuation = true;
                     break;
                 }
-                else if (Settings.ExclamationRunes.Contains(Runes[SubIndex].Rune)) {
+                else if (Settings.ExclamationMarkRunes.Contains(Runes[SubIndex].Rune)) {
                     WordPitch *= Settings.ExclamationPitchMultiplier;
                     FoundPunctuation = true;
                     break;
@@ -134,19 +134,19 @@ public sealed class DialogIterator {
                 if (Settings.NewlineRunes.Contains(CurrentFirstRune) && Settings.NewlineRunes.Contains(CurrentSecondRune)) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && Settings.ExclamationRunes.Contains(CurrentSecondRune)) {
+                else if (Settings.QuestionMarkRunes.Contains(CurrentFirstRune) && Settings.ExclamationMarkRunes.Contains(CurrentSecondRune)) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && Settings.QuestionRunes.Contains(CurrentSecondRune)) {
+                else if (Settings.ExclamationMarkRunes.Contains(CurrentFirstRune) && Settings.QuestionMarkRunes.Contains(CurrentSecondRune)) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.PeriodRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
+                else if (Settings.PeriodRunes.Contains(CurrentFirstRune) && (Settings.RightDelimiterRunes.Contains(CurrentSecondRune) || Settings.SymmetricalDelimiterRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
+                else if (Settings.QuestionMarkRunes.Contains(CurrentFirstRune) && (Settings.RightDelimiterRunes.Contains(CurrentSecondRune) || Settings.SymmetricalDelimiterRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
+                else if (Settings.ExclamationMarkRunes.Contains(CurrentFirstRune) && (Settings.RightDelimiterRunes.Contains(CurrentSecondRune) || Settings.SymmetricalDelimiterRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
 

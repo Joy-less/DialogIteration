@@ -21,31 +21,31 @@ public sealed class DialogIteratorSettings {
     /// <summary>
     /// The delay multiplier after a question mark.
     /// </summary>
-    public double QuestionDelayMultiplier { get; set; } = 0.3;
+    public double QuestionMarkDelayMultiplier { get; set; } = 0.3;
     /// <summary>
     /// The delay multiplier after an exclamation mark.
     /// </summary>
-    public double ExclamationDelayMultiplier { get; set; } = 0.3;
+    public double ExclamationMarkDelayMultiplier { get; set; } = 0.3;
     /// <summary>
     /// The delay multiplier after a comma, semicolon, or colon.
     /// </summary>
-    public double CommaDelayMultiplier { get; set; } = 0.2;
+    public double SeparatorDelayMultiplier { get; set; } = 0.2;
     /// <summary>
     /// The delay multiplier after a newline.
     /// </summary>
     public double NewlineDelayMultiplier { get; set; } = 0.15;
     /// <summary>
-    /// The delay multiplier after a symmetrical speech mark or apostrophe.
+    /// The delay multiplier after a symmetrical quotation mark or backtick.
     /// </summary>
-    public double SymmetricalBracketDelayMultiplier { get; set; } = 0.0;
+    public double SymmetricalDelimiterDelayMultiplier { get; set; } = 0.0;
     /// <summary>
-    /// The delay multiplier after a left bracket, square bracket, or curly brace.
+    /// The delay multiplier after a left bracket, square bracket, curly brace, or quotation mark.
     /// </summary>
-    public double LeftBracketDelayMultiplier { get; set; } = 0.0;
+    public double LeftDelimiterDelayMultiplier { get; set; } = 0.0;
     /// <summary>
-    /// The delay multiplier after a right bracket, square bracket, or curly brace.
+    /// The delay multiplier after a right bracket, square bracket, curly brace, or quotation mark.
     /// </summary>
-    public double RightBracketDelayMultiplier { get; set; } = 0.0;
+    public double RightDelimiterDelayMultiplier { get; set; } = 0.0;
 
     /// <summary>
     /// The maximum number of runes in a voice syllable.
@@ -84,7 +84,7 @@ public sealed class DialogIteratorSettings {
     /// <summary>
     /// A list of recognized question mark runes.
     /// </summary>
-    public HashSet<Rune> QuestionRunes { get; set; } = [
+    public HashSet<Rune> QuestionMarkRunes { get; set; } = [
         new Rune('?'), // Half-width question mark
         new Rune('？'), // Full-width question mark
 
@@ -93,7 +93,7 @@ public sealed class DialogIteratorSettings {
     /// <summary>
     /// A list of recognized exclamation mark runes.
     /// </summary>
-    public HashSet<Rune> ExclamationRunes { get; set; } = [
+    public HashSet<Rune> ExclamationMarkRunes { get; set; } = [
         new Rune('!'), // Half-width exclamation mark
         new Rune('！'), // Full-width exclamation mark
 
@@ -102,7 +102,7 @@ public sealed class DialogIteratorSettings {
     /// <summary>
     /// A list of recognized comma, semicolon, and colon runes.
     /// </summary>
-    public HashSet<Rune> CommaRunes { get; set; } = [
+    public HashSet<Rune> SeparatorRunes { get; set; } = [
         new Rune(','), // Half-width comma
         new Rune('，'), // Full-width comma
 
@@ -126,17 +126,17 @@ public sealed class DialogIteratorSettings {
         new Rune('\u0085'), // Next line
     ];
     /// <summary>
-    /// A list of recognized symmetrical speech mark, apostrophe, and backtick runes.
+    /// A list of recognized symmetrical quotation mark and backtick runes.
     /// </summary>
-    public HashSet<Rune> SymmetricalBracketRunes { get; set; } = [
+    public HashSet<Rune> SymmetricalDelimiterRunes { get; set; } = [
         new Rune('"'), // Straight double quotation mark
         new Rune('\''), // Straight single quotation mark
         new Rune('`'), // Backtick
     ];
     /// <summary>
-    /// A list of recognized left bracket, square bracket, curly brace, speech mark, and apostrophe runes.
+    /// A list of recognized left bracket, square bracket, curly brace, and quotation mark runes.
     /// </summary>
-    public HashSet<Rune> LeftBracketRunes { get; set; } = [
+    public HashSet<Rune> LeftDelimiterRunes { get; set; } = [
         new Rune('('), // Half-width left bracket
         new Rune('（'), // Full-width left bracket
         
@@ -160,9 +160,9 @@ public sealed class DialogIteratorSettings {
         new Rune('〚'), // Left white square bracket
     ];
     /// <summary>
-    /// A list of recognized right bracket, square bracket, and curly brace runes.
+    /// A list of recognized right bracket, square bracket, and curly brace, and quotation mark runes.
     /// </summary>
-    public HashSet<Rune> RightBracketRunes { get; set; } = [
+    public HashSet<Rune> RightDelimiterRunes { get; set; } = [
         new Rune(')'), // Half-width right bracket
         new Rune('）'), // Full-width right bracket
 
@@ -197,24 +197,24 @@ public sealed class DialogIteratorSettings {
     public double GetDelay(Rune Rune) {
         return BaseDelay * (
             PeriodRunes.Contains(Rune) ? PeriodDelayMultiplier :
-            QuestionRunes.Contains(Rune) ? QuestionDelayMultiplier :
-            ExclamationRunes.Contains(Rune) ? ExclamationDelayMultiplier :
-            CommaRunes.Contains(Rune) ? CommaDelayMultiplier :
+            QuestionMarkRunes.Contains(Rune) ? QuestionMarkDelayMultiplier :
+            ExclamationMarkRunes.Contains(Rune) ? ExclamationMarkDelayMultiplier :
+            SeparatorRunes.Contains(Rune) ? SeparatorDelayMultiplier :
             NewlineRunes.Contains(Rune) ? NewlineDelayMultiplier :
-            SymmetricalBracketRunes.Contains(Rune) ? SymmetricalBracketDelayMultiplier :
-            LeftBracketRunes.Contains(Rune) ? LeftBracketDelayMultiplier :
-            RightBracketRunes.Contains(Rune) ? RightBracketDelayMultiplier :
+            SymmetricalDelimiterRunes.Contains(Rune) ? SymmetricalDelimiterDelayMultiplier :
+            LeftDelimiterRunes.Contains(Rune) ? LeftDelimiterDelayMultiplier :
+            RightDelimiterRunes.Contains(Rune) ? RightDelimiterDelayMultiplier :
             NormalDelayMultiplier
         );
     }
     /// <summary>
     /// Returns true if the given rune is considered to be a punctuation pause.<br/>
-    /// This includes periods, question marks, exclamation marks, and commas.
+    /// This includes periods, question marks, exclamation marks, and separators.
     /// </summary>
     public bool IsPunctuationPause(Rune Rune) {
         return PeriodRunes.Contains(Rune)
-            || QuestionRunes.Contains(Rune)
-            || ExclamationRunes.Contains(Rune)
-            || CommaRunes.Contains(Rune);
+            || QuestionMarkRunes.Contains(Rune)
+            || ExclamationMarkRunes.Contains(Rune)
+            || SeparatorRunes.Contains(Rune);
     }
 }
