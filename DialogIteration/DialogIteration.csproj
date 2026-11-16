@@ -8,6 +8,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <!-- IDE0290: Use primary constructor -->
+        <NoWarn>IDE0290</NoWarn>
+    </PropertyGroup>
+
     <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0'))">
         <Features>runtime-async=on</Features>
     </PropertyGroup>

@@ -7,13 +7,13 @@ namespace DialogIteration;
 /// </summary>
 public sealed class DialogIteratorSettings {
     /// <summary>
-    /// The base delay after any character.
+    /// The base delay after any rune, in seconds.
     /// </summary>
     public double BaseDelay { get; set; } = 1.0;
     /// <summary>
-    /// The delay multiplier after a non-special character.
+    /// The delay multiplier after a non-special rune.
     /// </summary>
-    public double CharacterDelayMultiplier { get; set; } = 0.015;
+    public double NormalDelayMultiplier { get; set; } = 0.015;
     /// <summary>
     /// The delay multiplier after a period (full stop).
     /// </summary>
@@ -44,29 +44,29 @@ public sealed class DialogIteratorSettings {
     public double CloseBracketDelayMultiplier { get; set; } = 0.0;
 
     /// <summary>
-    /// The maximum number of characters in a voice syllable.
+    /// The maximum number of runes in a voice syllable.
     /// </summary>
     public int SyllableLength { get; set; } = 3;
 
     /// <summary>
-    /// The pitch multiplier of a character in any sentence.
+    /// The pitch multiplier of a rune in any sentence.
     /// </summary>
     public float BasePitch { get; set; } = 1.0f;
     /// <summary>
-    /// The pitch multiplier of a character in a non-special sentence.
+    /// The pitch multiplier of a rune in a non-special sentence.
     /// </summary>
-    public float StatementPitchMultiplier { get; set; } = 1.0f;
+    public float NormalPitchMultiplier { get; set; } = 1.0f;
     /// <summary>
-    /// The pitch multiplier of a character in a question sentence.
+    /// The pitch multiplier of a rune in a question sentence.
     /// </summary>
     public float QuestionPitchMultiplier { get; set; } = 1.4f;
     /// <summary>
-    /// The pitch multiplier of a character in an exclamation sentence.
+    /// The pitch multiplier of a rune in an exclamation sentence.
     /// </summary>
     public float ExclamationPitchMultiplier { get; set; } = 1.4f;
 
     /// <summary>
-    /// A list of recognized period (full stop) characters.
+    /// A list of recognized period (full stop) runes.
     /// </summary>
     public HashSet<Rune> PeriodRunes { get; set; } = [
         new Rune('.'), // Half-width full stop
@@ -78,7 +78,7 @@ public sealed class DialogIteratorSettings {
         new Rune('…'), // Ellipsis
     ];
     /// <summary>
-    /// A list of recognized question mark characters.
+    /// A list of recognized question mark runes.
     /// </summary>
     public HashSet<Rune> QuestionRunes { get; set; } = [
         new Rune('?'), // Half-width question mark
@@ -87,7 +87,7 @@ public sealed class DialogIteratorSettings {
         new Rune('⁇'), // Double question mark
     ];
     /// <summary>
-    /// A list of recognized exclamation mark characters.
+    /// A list of recognized exclamation mark runes.
     /// </summary>
     public HashSet<Rune> ExclamationRunes { get; set; } = [
         new Rune('!'), // Half-width exclamation mark
@@ -96,7 +96,7 @@ public sealed class DialogIteratorSettings {
         new Rune('‼'), // Double exclamation mark
     ];
     /// <summary>
-    /// A list of recognized comma, semicolon, and colon characters.
+    /// A list of recognized comma, semicolon, and colon runes.
     /// </summary>
     public HashSet<Rune> CommaRunes { get; set; } = [
         new Rune(','), // Half-width comma
@@ -112,7 +112,7 @@ public sealed class DialogIteratorSettings {
         new Rune('：'), // Full-width colon
     ];
     /// <summary>
-    /// A list of recognized newline characters.
+    /// A list of recognized newline runes.
     /// </summary>
     public HashSet<Rune> NewlineRunes { get; set; } = [
         new Rune('\n'), // Line feed
@@ -122,7 +122,7 @@ public sealed class DialogIteratorSettings {
         new Rune('\u0085'), // Next line
     ];
     /// <summary>
-    /// A list of recognized open bracket, open square bracket, and open curly brace characters.
+    /// A list of recognized open bracket, open square bracket, and open curly brace runes.
     /// </summary>
     public HashSet<Rune> OpenBracketRunes { get; set; } = [
         new Rune('('), // Half-width open bracket
@@ -145,7 +145,7 @@ public sealed class DialogIteratorSettings {
         new Rune('〚'), // Left white square bracket
     ];
     /// <summary>
-    /// A list of recognized close bracket, close square bracket, and close curly brace characters.
+    /// A list of recognized close bracket, close square bracket, and close curly brace runes.
     /// </summary>
     public HashSet<Rune> CloseBracketRunes { get; set; } = [
         new Rune(')'), // Half-width close bracket
@@ -172,5 +172,30 @@ public sealed class DialogIteratorSettings {
     /// Constructs a <see cref="DialogIteratorSettings"/> instance with default values.
     /// </summary>
     public DialogIteratorSettings() {
+    }
+    /// <summary>
+    /// Calculates the delay after the given rune, in seconds.
+    /// </summary>
+    public double GetDelay(Rune Rune) {
+        return BaseDelay * (
+            PeriodRunes.Contains(Rune) ? PeriodDelayMultiplier :
+            QuestionRunes.Contains(Rune) ? QuestionDelayMultiplier :
+            ExclamationRunes.Contains(Rune) ? ExclamationDelayMultiplier :
+            CommaRunes.Contains(Rune) ? CommaDelayMultiplier :
+            NewlineRunes.Contains(Rune) ? NewlineDelayMultiplier :
+            OpenBracketRunes.Contains(Rune) ? OpenBracketDelayMultiplier :
+            CloseBracketRunes.Contains(Rune) ? CloseBracketDelayMultiplier :
+            NormalDelayMultiplier
+        );
+    }
+    /// <summary>
+    /// Returns true if the given rune is considered to be a pause.<br/>
+    /// This includes periods, question marks, exclamation marks, and commas.
+    /// </summary>
+    public bool IsPause(Rune Rune) {
+        return PeriodRunes.Contains(Rune)
+            || QuestionRunes.Contains(Rune)
+            || ExclamationRunes.Contains(Rune)
+            || CommaRunes.Contains(Rune);
     }
 }
