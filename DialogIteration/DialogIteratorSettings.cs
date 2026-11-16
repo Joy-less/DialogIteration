@@ -15,7 +15,7 @@ public sealed class DialogIteratorSettings {
     /// </summary>
     public double NormalDelayMultiplier { get; set; } = 0.015;
     /// <summary>
-    /// The delay multiplier after a period (full stop).
+    /// The delay multiplier after a period (full stop) or ellipsis.
     /// </summary>
     public double PeriodDelayMultiplier { get; set; } = 0.3;
     /// <summary>
@@ -35,13 +35,17 @@ public sealed class DialogIteratorSettings {
     /// </summary>
     public double NewlineDelayMultiplier { get; set; } = 0.15;
     /// <summary>
-    /// The delay multiplier after an open bracket, open square bracket, or open curly brace.
+    /// The delay multiplier after a symmetrical speech mark or apostrophe.
     /// </summary>
-    public double OpenBracketDelayMultiplier { get; set; } = 0.0;
+    public double SymmetricalBracketDelayMultiplier { get; set; } = 0.0;
     /// <summary>
-    /// The delay multiplier after a close bracket, close square bracket, or close curly brace.
+    /// The delay multiplier after a left bracket, square bracket, or curly brace.
     /// </summary>
-    public double CloseBracketDelayMultiplier { get; set; } = 0.0;
+    public double LeftBracketDelayMultiplier { get; set; } = 0.0;
+    /// <summary>
+    /// The delay multiplier after a right bracket, square bracket, or curly brace.
+    /// </summary>
+    public double RightBracketDelayMultiplier { get; set; } = 0.0;
 
     /// <summary>
     /// The maximum number of runes in a voice syllable.
@@ -66,7 +70,7 @@ public sealed class DialogIteratorSettings {
     public float ExclamationPitchMultiplier { get; set; } = 1.4f;
 
     /// <summary>
-    /// A list of recognized period (full stop) runes.
+    /// A list of recognized period (full stop) and ellipsis runes.
     /// </summary>
     public HashSet<Rune> PeriodRunes { get; set; } = [
         new Rune('.'), // Half-width full stop
@@ -122,17 +126,28 @@ public sealed class DialogIteratorSettings {
         new Rune('\u0085'), // Next line
     ];
     /// <summary>
-    /// A list of recognized open bracket, open square bracket, and open curly brace runes.
+    /// A list of recognized symmetrical speech mark, apostrophe, and backtick runes.
     /// </summary>
-    public HashSet<Rune> OpenBracketRunes { get; set; } = [
-        new Rune('('), // Half-width open bracket
-        new Rune('（'), // Full-width open bracket
+    public HashSet<Rune> SymmetricalBracketRunes { get; set; } = [
+        new Rune('"'), // Straight double quotation mark
+        new Rune('\''), // Straight single quotation mark
+        new Rune('`'), // Backtick
+    ];
+    /// <summary>
+    /// A list of recognized left bracket, square bracket, curly brace, speech mark, and apostrophe runes.
+    /// </summary>
+    public HashSet<Rune> LeftBracketRunes { get; set; } = [
+        new Rune('('), // Half-width left bracket
+        new Rune('（'), // Full-width left bracket
         
-        new Rune('['), // Half-width open square bracket
-        new Rune('［'), // Full-width open square bracket
+        new Rune('['), // Half-width left square bracket
+        new Rune('［'), // Full-width left square bracket
 
-        new Rune('{'), // Half-width open curly brace
-        new Rune('｛'), // Full-width open curly brace
+        new Rune('{'), // Half-width left curly brace
+        new Rune('｛'), // Full-width left curly brace
+
+        new Rune('“'), // Left curly double quotation mark
+        new Rune('‘'), // Left curly single quotation mark
 
         new Rune('〈'), // Left angle bracket
         new Rune('《'), // Left double angle bracket
@@ -145,17 +160,20 @@ public sealed class DialogIteratorSettings {
         new Rune('〚'), // Left white square bracket
     ];
     /// <summary>
-    /// A list of recognized close bracket, close square bracket, and close curly brace runes.
+    /// A list of recognized right bracket, square bracket, and curly brace runes.
     /// </summary>
-    public HashSet<Rune> CloseBracketRunes { get; set; } = [
-        new Rune(')'), // Half-width close bracket
-        new Rune('）'), // Full-width close bracket
+    public HashSet<Rune> RightBracketRunes { get; set; } = [
+        new Rune(')'), // Half-width right bracket
+        new Rune('）'), // Full-width right bracket
 
-        new Rune(']'), // Half-width close square bracket
-        new Rune('］'), // Full-width close square bracket
+        new Rune(']'), // Half-width right square bracket
+        new Rune('］'), // Full-width right square bracket
 
-        new Rune('}'), // Half-width close curly brace
-        new Rune('｝'), // Full-width close curly brace
+        new Rune('}'), // Half-width right curly brace
+        new Rune('｝'), // Full-width right curly brace
+        
+        new Rune('”'), // Right curly double quotation mark
+        new Rune('’'), // Right curly single quotation mark
 
         new Rune('〉'), // Right angle bracket
         new Rune('》'), // Right double angle bracket
@@ -183,16 +201,17 @@ public sealed class DialogIteratorSettings {
             ExclamationRunes.Contains(Rune) ? ExclamationDelayMultiplier :
             CommaRunes.Contains(Rune) ? CommaDelayMultiplier :
             NewlineRunes.Contains(Rune) ? NewlineDelayMultiplier :
-            OpenBracketRunes.Contains(Rune) ? OpenBracketDelayMultiplier :
-            CloseBracketRunes.Contains(Rune) ? CloseBracketDelayMultiplier :
+            SymmetricalBracketRunes.Contains(Rune) ? SymmetricalBracketDelayMultiplier :
+            LeftBracketRunes.Contains(Rune) ? LeftBracketDelayMultiplier :
+            RightBracketRunes.Contains(Rune) ? RightBracketDelayMultiplier :
             NormalDelayMultiplier
         );
     }
     /// <summary>
-    /// Returns true if the given rune is considered to be a pause.<br/>
+    /// Returns true if the given rune is considered to be a punctuation pause.<br/>
     /// This includes periods, question marks, exclamation marks, and commas.
     /// </summary>
-    public bool IsPause(Rune Rune) {
+    public bool IsPunctuationPause(Rune Rune) {
         return PeriodRunes.Contains(Rune)
             || QuestionRunes.Contains(Rune)
             || ExclamationRunes.Contains(Rune)

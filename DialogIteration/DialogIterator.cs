@@ -140,13 +140,13 @@ public sealed class DialogIterator {
                 else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && Settings.QuestionRunes.Contains(CurrentSecondRune)) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.PeriodRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                else if (Settings.PeriodRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                else if (Settings.QuestionRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
-                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && Settings.CloseBracketRunes.Contains(CurrentSecondRune)) {
+                else if (Settings.ExclamationRunes.Contains(CurrentFirstRune) && (Settings.RightBracketRunes.Contains(CurrentSecondRune) || Settings.SymmetricalBracketRunes.Contains(CurrentSecondRune))) {
                     IsCombinedPair = true;
                 }
 
