@@ -192,6 +192,40 @@ public sealed class DialogIteratorSettings {
     public DialogIteratorSettings() {
     }
     /// <summary>
+    /// Creates a new <see cref="DialogIteratorSettings"/> where each member is identical to this instance
+    /// in value but not in reference.
+    /// </summary>
+    public DialogIteratorSettings DeepClone() {
+        return new DialogIteratorSettings() {
+            BaseDelay = BaseDelay,
+            NormalDelayMultiplier = NormalDelayMultiplier,
+            PeriodDelayMultiplier = PeriodDelayMultiplier,
+            QuestionMarkDelayMultiplier = QuestionMarkDelayMultiplier,
+            ExclamationMarkDelayMultiplier = ExclamationMarkDelayMultiplier,
+            SeparatorDelayMultiplier = SeparatorDelayMultiplier,
+            NewlineDelayMultiplier = NewlineDelayMultiplier,
+            SymmetricalDelimiterDelayMultiplier = SymmetricalDelimiterDelayMultiplier,
+            LeftDelimiterDelayMultiplier = LeftDelimiterDelayMultiplier,
+            RightDelimiterDelayMultiplier = RightDelimiterDelayMultiplier,
+
+            SyllableLength = SyllableLength,
+
+            BasePitch = BasePitch,
+            NormalPitchMultiplier = NormalPitchMultiplier,
+            QuestionPitchMultiplier = QuestionPitchMultiplier,
+            ExclamationPitchMultiplier = ExclamationPitchMultiplier,
+
+            PeriodRunes = [.. PeriodRunes],
+            QuestionMarkRunes = [.. QuestionMarkRunes],
+            ExclamationMarkRunes = [.. ExclamationMarkRunes],
+            SeparatorRunes = [.. SeparatorRunes],
+            NewlineRunes = [.. NewlineRunes],
+            SymmetricalDelimiterRunes = [.. SymmetricalDelimiterRunes],
+            LeftDelimiterRunes = [.. LeftDelimiterRunes],
+            RightDelimiterRunes = [.. RightDelimiterRunes],
+        };
+    }
+    /// <summary>
     /// Calculates the delay after the given rune, in seconds.
     /// </summary>
     public double GetDelay(Rune Rune) {
