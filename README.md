@@ -1,5 +1,7 @@
 # DialogIteration
 
+[![NuGet](https://img.shields.io/nuget/v/DialogIteration.svg)](https://www.nuget.org/packages/DialogIteration)
+
 A helper library for iterating dialog character-by-character.
 
 I decided to make this library for my own projects, because dialog character iteration
