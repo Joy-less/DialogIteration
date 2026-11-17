@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
 namespace DialogIteration;
 
@@ -166,18 +165,18 @@ public sealed class DialogIterator {
             // Wait for rune delay (unless last rune)
             if (Index + 1 < Runes.Count) {
                 double RuneDelay = Settings.GetDelay(CurrentRune);
-                long StartTimestamp = Stopwatch.GetTimestamp();
+                double SecondsElapsed = 0.0;
 
                 while (true) {
                     if (ShouldSkip is not null && ShouldSkip()) {
                         break;
                     }
 
-                    if (Stopwatch.GetElapsedTime(StartTimestamp).TotalSeconds >= RuneDelay) {
+                    if (SecondsElapsed >= RuneDelay) {
                         break;
                     }
 
-                    await NextFrameAsync();
+                    SecondsElapsed += await NextFrameAsync();
                 }
             }
         }
