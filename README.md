@@ -5,6 +5,9 @@ A helper library for iterating dialog character-by-character.
 I decided to make this library for my own projects, because dialog character iteration
 is extremely difficult to get right.
 
+This library is designed with both English and Japanese in mind, as well as various other
+languages. Some languages have unique quirks that may make this library suboptimal.
+
 ## Usage
 
 Example for Godot with GDTask and GDTaskGlobalCancellation:
